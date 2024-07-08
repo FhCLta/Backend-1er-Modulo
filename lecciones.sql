@@ -108,3 +108,48 @@ WHERE address_id
 IN (SELECT address_id 
 	FROM address
    WHERE postal_code = '52137');
+
+   /* Seleccionar todos los registros del cliente y su dirección correspondiente de dos tablas*/
+SELECT *
+FROM customer
+INNER JOIN address 
+ON customer.address_id = address.address_id;
+
+/* Descripción: Esta consulta realiza una unión interna (INNER JOIN) entre las tablas customer y address. 
+Selecciona los campos first_name y last_name de la tabla customer, y los campos address y district de la tabla address.
+ La unión se realiza cuando el address_id en la tabla customer coincide con el address_id en la tabla address, lo que permite
+combinar información de los clientes con su correspondiente dirección y distrito en el resultado de la consulta.  */
+
+/* Seleccionar todos los registros de los clientes y su dirección correspondiente donde el código postal es '52137' */
+SELECT *
+FROM customer
+INNER JOIN address
+ON address.address_id = customer.address_id
+WHERE postal_code = '52137';
+
+/* Contar el número de clientes por código postal, ordenando de mayor a menor */
+SELECT postal_code, COUNT(*)
+FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+GROUP BY postal_code
+ORDER BY COUNT(*) DESC;
+
+/* Seleccionar el título de la película y los nombres de los actores asociados mediante una doble unión interna */
+SELECT title, first_name, last_name
+FROM film AS f
+INNER JOIN film_actor AS fa
+ON f.film_id = fa.film_id
+INNER JOIN actor AS ac
+ON ac.actor_id = fa.actor_id;
+
+/* Seleccionar los IDs de la película, título, ID de inventario y ID de tienda, usando una unión izquierda y ordenando por ID de inventario en orden descendente */
+SELECT film.film_id, title, inventory_id, store_id
+FROM film
+LEFT JOIN inventory
+ON film.film_id = inventory.film_id
+ORDER BY inventory_id DESC;
+
+
+
+
