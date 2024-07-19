@@ -23,6 +23,22 @@ app.get('/productos', async (req, res) => {
   }
 });
 
+//Endpoint para obtener obtener los clientes
+app.get('/clientes', async (req, res)=> {
+try{
+   const clientes = await db.select('*').from('clientes');
+   res.json({
+    msg: 'Clientes Obtenidos',
+    clientes,
+   });
+
+} catch (error) {
+    res.status(500).json({ msg: 'Error al obtener productos', error });
+    console.log(error);
+}
+});
+
+
 // Endpoint para obtener un producto por ID
 app.get('/productos/:id', async (req, res) => {
   const { id } = req.params;
