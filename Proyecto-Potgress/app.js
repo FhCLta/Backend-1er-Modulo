@@ -12,13 +12,14 @@ app.use(express.json());
 // Endpoint para obtener todos los productos
 app.get('/productos', async (req, res) => {
   try {
-    const productos = await db.select('*').from('Productos');
+    const productos = await db.select('*').from('productos');
     res.json({
       msg: 'Productos obtenidos',
       productos,
     });
   } catch (error) {
     res.status(500).json({ msg: 'Error al obtener productos', error });
+    console.log(error);
   }
 });
 
